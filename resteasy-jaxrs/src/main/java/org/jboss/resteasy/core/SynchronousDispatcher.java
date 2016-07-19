@@ -95,6 +95,7 @@ public class SynchronousDispatcher implements Dispatcher
 
    public Response preprocess(HttpRequest request)
    {
+      System.out.println("Processing request");
       Response aborted = null;
       try
       {
@@ -126,6 +127,7 @@ public class SynchronousDispatcher implements Dispatcher
     */
    protected boolean preprocess(HttpRequest request, HttpResponse response)
    {
+      System.out.println("Processing request");
       Response aborted = null;
       try
       {
@@ -191,6 +193,7 @@ public class SynchronousDispatcher implements Dispatcher
 
    public void invoke(HttpRequest request, HttpResponse response)
    {
+      System.out.println("Invoking");
       try
       {
          pushContextObjects(request, response);
@@ -222,6 +225,7 @@ public class SynchronousDispatcher implements Dispatcher
     */
    public void invokePropagateNotFound(HttpRequest request, HttpResponse response) throws NotFoundException
    {
+      System.out.println("Invoking not found");
       try
       {
          pushContextObjects(request, response);
@@ -362,6 +366,7 @@ public class SynchronousDispatcher implements Dispatcher
     */
    public Response execute(HttpRequest request, HttpResponse response, ResourceInvoker invoker)
    {
+      System.out.println("Execute");
       Response jaxrsResponse = null;
       try
       {
@@ -396,6 +401,7 @@ public class SynchronousDispatcher implements Dispatcher
     */
    public void invoke(HttpRequest request, HttpResponse response, ResourceInvoker invoker)
    {
+      System.out.println("Invoking");
       Response jaxrsResponse = null;
       try
       {
@@ -468,6 +474,7 @@ public class SynchronousDispatcher implements Dispatcher
 
    protected void writeResponse(HttpRequest request, HttpResponse response, Response jaxrsResponse)
    {
+      System.out.println("writing response");
       try
       {
          ServerResponseWriter.writeNomapResponse((BuiltResponse) jaxrsResponse, request, response, providerFactory);
