@@ -12,6 +12,7 @@ import java.io.StringWriter;
 public class ExceptionAdapter extends RuntimeException
 {
 
+   private static int testVariable = 5;
    /**
     * The serialVersionUID
     */
