@@ -3,6 +3,7 @@ package org.jboss.resteasy.test.core.basic;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.resteasy.test.cdi.validation.ValidationWithCDITest;
 import org.jboss.resteasy.test.core.basic.resource.ApplicationConfig;
 import org.jboss.resteasy.test.core.basic.resource.ApplicationConfigInjectionResource;
 import org.jboss.resteasy.test.core.basic.resource.ApplicationConfigInterface;
@@ -35,6 +36,7 @@ import javax.ws.rs.core.Response;
 public class ApplicationConfigTest {
 
     static Client client;
+    private static String prefix = "/resources";
 
     @Deployment
     public static Archive<?> deploySimpleResource() {
@@ -42,6 +44,8 @@ public class ApplicationConfigTest {
         war.addClasses(ApplicationConfig.class, ApplicationConfigInjectionResource.class, ApplicationConfigInterface.class,
                 ApplicationConfigQuotedTextWriter.class, ApplicationConfigResource.class,
                 ApplicationConfigService.class);
+        war.addAsWebInfResource(ValidationWithCDITest.class.getPackage(), "web.xml", "/web.xml");
+        System.out.println(war.toString(true));
         return war;
     }
 
@@ -71,8 +75,8 @@ public class ApplicationConfigTest {
      */
     @Test
     public void testIt() {
-        basicTest(generateURL("/my"), "\"hello\"");
-        basicTest(generateURL("/myinterface"), "hello");
+        basicTest(generateURL(prefix + "/my"), "\"hello\"");
+        basicTest(generateURL(prefix + "/myinterface"), "hello");
     }
 
     /**
@@ -81,7 +85,7 @@ public class ApplicationConfigTest {
      */
     @Test
     public void testFieldInjection() {
-        basicTest(generateURL("/injection/field"), "true");
+        basicTest(generateURL(prefix + "/injection/field"), "true");
     }
 
     /**
@@ -90,7 +94,7 @@ public class ApplicationConfigTest {
      */
     @Test
     public void testSetterInjection() {
-        basicTest(generateURL("/injection/setter"), "true");
+        basicTest(generateURL(prefix + "/injection/setter"), "true");
     }
 
     /**
@@ -99,7 +103,7 @@ public class ApplicationConfigTest {
      */
     @Test
     public void testConstructorInjection() {
-        basicTest(generateURL("/injection/constructor"), "true");
+        basicTest(generateURL(prefix + "/injection/constructor"), "true");
     }
 
 }

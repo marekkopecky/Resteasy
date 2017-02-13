@@ -7,7 +7,7 @@ import javax.ws.rs.core.UriInfo;
 import java.util.HashSet;
 import java.util.Set;
 
-@ApplicationPath("/")
+@ApplicationPath("resources")
 public class ApplicationConfig extends Application {
     private static ApplicationConfig instance;
 
