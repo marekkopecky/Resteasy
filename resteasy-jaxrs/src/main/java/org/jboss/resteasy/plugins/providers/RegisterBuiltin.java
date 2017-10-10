@@ -1,9 +1,13 @@
 package org.jboss.resteasy.plugins.providers;
 
 import org.jboss.resteasy.core.ThreadLocalResteasyProviderFactory;
+import org.jboss.resteasy.plugins.interceptors.encoding.AcceptEncodingGZIPFilter;
+import org.jboss.resteasy.plugins.interceptors.encoding.GZIPDecodingInterceptor;
+import org.jboss.resteasy.plugins.interceptors.encoding.GZIPEncodingInterceptor;
 import org.jboss.resteasy.resteasy_jaxrs.i18n.LogMessages;
 import org.jboss.resteasy.spi.ResteasyProviderFactory;
-
+import java.security.AccessController;
+import java.security.PrivilegedAction;
 import javax.ws.rs.ext.Providers;
 
 import java.io.BufferedReader;
@@ -85,6 +89,19 @@ public class RegisterBuiltin
             LogMessages.LOGGER.classNotFoundException(line, entry.getValue(), e);
          }
       }
+		if (AccessController.doPrivileged(new PrivilegedAction<Boolean>() {
+			@Override
+			public Boolean run() {
+				final String value = System.getProperty("resteasy.allowGzip");
+				if ("".equals(value))
+					return Boolean.FALSE;
+				return Boolean.parseBoolean(value);
+			}
+		})) {			
+			factory.registerProvider(AcceptEncodingGZIPFilter.class, true);
+			factory.registerProvider(GZIPDecodingInterceptor.class, true);
+			factory.registerProvider(GZIPEncodingInterceptor.class, true);
+		}
    }
 
 }
