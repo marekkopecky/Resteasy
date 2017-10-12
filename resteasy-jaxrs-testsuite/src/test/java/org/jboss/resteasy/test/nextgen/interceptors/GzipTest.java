@@ -9,10 +9,12 @@ import org.jboss.resteasy.annotations.GZIP;
 import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
+import org.jboss.resteasy.plugins.interceptors.encoding.AcceptEncodingGZIPInterceptor;
 import org.jboss.resteasy.plugins.interceptors.encoding.GZIPDecodingInterceptor;
 import org.jboss.resteasy.plugins.interceptors.encoding.GZIPEncodingInterceptor;
 import org.jboss.resteasy.test.BaseResourceTest;
 import org.jboss.resteasy.test.TestPortProvider;
+import org.jboss.resteasy.spi.ResteasyProviderFactory;
 import org.jboss.resteasy.util.ReadFromStream;
 import org.junit.Assert;
 import org.junit.Before;
@@ -71,6 +73,7 @@ public class GzipTest extends BaseResourceTest
       @GET
       @Path("text")
       @Produces("text/plain")
+      @GZIP
       public Response getText(@Context HttpHeaders headers)
       {
          /* Can't test this anymore because TCK expects that no accept encoding is set by default
@@ -78,7 +81,7 @@ public class GzipTest extends BaseResourceTest
          System.out.println(acceptEncoding);
          Assert.assertEquals("gzip, deflate", acceptEncoding);
          */
-         return Response.ok("HELLO WORLD").header("Content-Encoding", "gzip").build();
+         return Response.ok("HELLO WORLD").build();
       }
 
       @GET
@@ -146,6 +149,8 @@ public class GzipTest extends BaseResourceTest
    @Before
    public void setUp() throws Exception
    {
+	  ResteasyProviderFactory.getInstance().registerProvider(GZIPEncodingInterceptor.class);
+	  ResteasyProviderFactory.getInstance().registerProvider(GZIPDecodingInterceptor.class);
       addPerRequestResource(GZIPService.class);
    }
 
@@ -207,7 +212,7 @@ public class GzipTest extends BaseResourceTest
    @Test
    public void testContentLength() throws Exception
    {
-      ResteasyClient client = new ResteasyClientBuilder().build();
+      ResteasyClient client = new ResteasyClientBuilder().register(GZIPDecodingInterceptor.class).build();
       {
          WebTarget target = client.target(TestPortProvider.generateURL("/text"));
          Response response = target.request().get();
@@ -294,7 +299,6 @@ public class GzipTest extends BaseResourceTest
    public void testWasZipped() throws Exception
    {
       // test that it was zipped by running it through Apache HTTP Client which does not automatically unzip
-
       HttpClient client = new DefaultHttpClient();
       {
          HttpGet get = new HttpGet(TestPortProvider.generateURL("/encoded/text"));
