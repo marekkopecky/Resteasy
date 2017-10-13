@@ -7,7 +7,7 @@ import javax.ws.rs.ConstrainedTo;
 import javax.ws.rs.RuntimeType;
 import javax.ws.rs.container.DynamicFeature;
 import javax.ws.rs.container.ResourceInfo;
-import javax.ws.rs.core.Configurable;
+import javax.ws.rs.core.Configuration;
 import javax.ws.rs.core.FeatureContext;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -21,6 +21,9 @@ import java.util.Set;
 @ConstrainedTo(RuntimeType.SERVER)
 public class ServerContentEncodingAnnotationFeature implements DynamicFeature
 {
+   Configuration configuration;
+   FeatureContext configurable;
+
    @Override
    public void configure(ResourceInfo resourceInfo, FeatureContext configurable)
    {
@@ -34,7 +37,7 @@ public class ServerContentEncodingAnnotationFeature implements DynamicFeature
          encodings = getEncodings(declaring.getAnnotations());
          if (encodings.size() <= 0) return;
       }
-      configurable.register(createFilter(encodings));
+      this.configurable = configurable;
    }
 
    protected ServerContentEncodingAnnotationFilter createFilter(Set<String> encodings)
@@ -45,7 +48,16 @@ public class ServerContentEncodingAnnotationFeature implements DynamicFeature
    protected Set<String> getEncodings(Annotation[] annotations)
    {
       // check if GZIP encoder has been registered
-      final boolean gzipRegistered = ResteasyProviderFactory.getInstance().isRegistered(GZIPEncodingInterceptor.class);
+      boolean gzipRegistered;
+      if (configurable == null) {
+         gzipRegistered = ResteasyProviderFactory.getInstance().isRegistered(GZIPEncodingInterceptor.class);
+      } else {
+         if (configuration == null) {
+            configuration = configurable.getConfiguration();
+         }
+         gzipRegistered = configuration.isRegistered(GZIPEncodingInterceptor.class);
+      }
+
       Set<String> encodings = new HashSet<String>();
       for (Annotation annotation : annotations)
       {
