@@ -1,5 +1,8 @@
 package org.jboss.resteasy.test.stream.resource;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -21,9 +24,11 @@ import javax.ws.rs.ext.Provider;
 @Provider
 public class StreamRawByteArrayMessageBodyReaderWriter implements MessageBodyReader<Byte[]>, MessageBodyWriter<Byte[]> {
 
+   private static final Logger LOG = LogManager.getLogger(StreamRawByteArrayMessageBodyReaderWriter.class);
+
    @Override
    public boolean isWriteable(Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {
-      System.out.println(this + ": type: " + type + ": " + (byte.class.equals(type) || Byte.class.equals(type)));
+      LOG.info(this + ": type: " + type + ": " + (byte.class.equals(type) || Byte.class.equals(type)));
       return Byte[].class.equals(type);
    }
 

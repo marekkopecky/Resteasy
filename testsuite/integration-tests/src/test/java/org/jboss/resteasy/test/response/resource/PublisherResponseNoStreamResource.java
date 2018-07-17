@@ -8,7 +8,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jboss.resteasy.spi.HttpRequest;
+import org.jboss.resteasy.test.core.basic.resource.FileExtensionMappingResource;
 import org.reactivestreams.Publisher;
 
 import io.reactivex.Flowable;
@@ -17,7 +20,8 @@ import io.reactivex.Flowable;
 public class PublisherResponseNoStreamResource {
 
    private static boolean terminated = false;
-   
+   private static final Logger LOG = LogManager.getLogger(FileExtensionMappingResource.class);
+
    @GET
    @Path("text")
    @Produces("application/json")
@@ -31,7 +35,7 @@ public class PublisherResponseNoStreamResource {
    @Produces("application/json")
    public Publisher<String> textInfinite() {
       terminated = false;
-      System.err.println("Starting ");
+      LOG.error("Starting ");
       return Flowable.interval(1, TimeUnit.SECONDS).map(v -> {
          return "one";
       }).doFinally(() -> {

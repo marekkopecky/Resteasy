@@ -3,7 +3,6 @@ package org.jboss.resteasy.test.interceptor;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.logging.Logger;
-import org.jboss.resteasy.spi.ResteasyProviderFactory;
 import org.jboss.resteasy.test.interceptor.resource.PriorityExecutionClientRequestFilter1;
 import org.jboss.resteasy.test.interceptor.resource.PriorityExecutionClientRequestFilter2;
 import org.jboss.resteasy.test.interceptor.resource.PriorityExecutionClientRequestFilter3;

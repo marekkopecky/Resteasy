@@ -12,6 +12,8 @@ import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.container.ContainerResponseFilter;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jboss.resteasy.core.interception.jaxrs.SuspendableContainerResponseContext;
 import org.jboss.resteasy.spi.HttpRequest;
 import org.jboss.resteasy.spi.ResteasyAsynchronousResponse;
@@ -21,6 +23,7 @@ public abstract class AsyncResponseFilter implements ContainerResponseFilter {
 
    private String name;
    private String callbackException;
+   private static final Logger LOG = LogManager.getLogger(AsyncRequestFilter.class);
    
    public AsyncResponseFilter(String name)
    {
@@ -43,7 +46,7 @@ public abstract class AsyncResponseFilter implements ContainerResponseFilter {
 
       SuspendableContainerResponseContext ctx = (SuspendableContainerResponseContext) responseContext;
       String action = requestContext.getHeaderString(name);
-      System.err.println("Filter response for "+name+" with action: "+action);
+      LOG.error("Filter response for "+name+" with action: "+action);
       if("sync-pass".equals(action)) {
          // do nothing
       }else if("sync-fail".equals(action)) {
@@ -72,7 +75,7 @@ public abstract class AsyncResponseFilter implements ContainerResponseFilter {
             } catch (InterruptedException e)
             {
                // TODO Auto-generated catch block
-               e.printStackTrace();
+               LOG.error("Error:", e);
             }
             ctx.setEntity(name);
             ctx.resume();
@@ -94,7 +97,7 @@ public abstract class AsyncResponseFilter implements ContainerResponseFilter {
             } catch (InterruptedException e)
             {
                // TODO Auto-generated catch block
-               e.printStackTrace();
+               LOG.error("Error:", e);
             }
             ctx.setEntity(name);
             ResteasyAsynchronousResponse resp = req.getAsyncContext().getAsyncResponse();
@@ -109,6 +112,6 @@ public abstract class AsyncResponseFilter implements ContainerResponseFilter {
                ctx.resume(new Throwable("ouch"));
          });
       }
-      System.err.println("Filter response for "+name+" with action: "+action+" done");
+      LOG.error("Filter response for "+name+" with action: "+action+" done");
    }
 }

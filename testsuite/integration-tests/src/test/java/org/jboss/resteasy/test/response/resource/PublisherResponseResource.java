@@ -9,6 +9,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jboss.resteasy.annotations.Stream;
 import org.jboss.resteasy.spi.HttpRequest;
 import org.reactivestreams.Publisher;
@@ -19,6 +21,7 @@ import io.reactivex.Flowable;
 public class PublisherResponseResource {
 
    private static boolean terminated = false;
+   private static final Logger LOG = LogManager.getLogger(PublisherResponseResource.class);
    
    @GET
    @Path("text")
@@ -35,7 +38,7 @@ public class PublisherResponseResource {
    @Stream
    public Publisher<String> textInfinite() {
       terminated = false;
-      System.err.println("Starting ");
+      LOG.error("Starting ");
       return Flowable.interval(1, TimeUnit.SECONDS).map(v -> {
          return "one";
       }).doFinally(() -> {
@@ -89,7 +92,7 @@ public class PublisherResponseResource {
    @Produces("application/json")
    public Publisher<String> chunkedInfinite() {
       terminated = false;
-      System.err.println("Starting ");
+      LOG.error("Starting ");
       char[] chunk = new char[8192];
       Arrays.fill(chunk, 'a');
       String ret = new String(chunk);

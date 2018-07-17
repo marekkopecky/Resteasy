@@ -1,5 +1,8 @@
 package org.jboss.resteasy.test.resource.param.resource;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +14,8 @@ import javax.ws.rs.core.Response;
 
 @Path("")
 public class MultiplePathSegmentResource {
+
+   private static final Logger LOG = LogManager.getLogger(MultiplePathSegmentResource.class);
 
    @GET
    @Path("{segments:.*}/array/{count}")
@@ -33,21 +38,21 @@ public class MultiplePathSegmentResource {
    @GET
    @Path("{segment}/{segment}/array")
    public Response getTwoSegmentsArray(@PathParam("segment") PathSegment[] segments) {
-      System.out.println("array segments: " + segments.length);
+      LOG.info("array segments: " + segments.length);
       return Response.status(segments.length == 2 ? 200 : 400).build();
    }
 
    @GET
    @Path("{segment}/{segment}/list")
    public Response getTwoSegmentsList(@PathParam("segment") List<PathSegment> segments) {
-      System.out.println("array segments: " + segments.size());
+      LOG.info("array segments: " + segments.size());
       return Response.status(segments.size() == 2 ? 200 : 400).build();
    }
 
    @GET
    @Path("{segment}/{segment}/arraylist")
    public Response getTwoSegmentsArrayList(@PathParam("segment") ArrayList<PathSegment> segments) {
-      System.out.println("array segments: " + segments.size());
+      LOG.info("array segments: " + segments.size());
       return Response.status(segments.size() == 2 ? 200 : 400).build();
    }
 }

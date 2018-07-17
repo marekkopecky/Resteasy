@@ -24,25 +24,25 @@
         "-//Puppy Crawl//DTD Check Configuration 1.3//EN"
         "http://www.puppycrawl.com/dtds/configuration_1_3.dtd">
 <module name="Checker">
-    <module name="FileTabCharacter">
+    <!--module name="FileTabCharacter">
         <property name="eachLine" value="true"/>
-    </module>
+    </module-->
 
     <module name="RegexpSingleline">
         <!-- \s matches whitespace character, $ matches end of line. -->
-        <property name="format" value="\s+$"/>
+        <!--property name="format" value="\s+$"/-->
         <property name="message" value="Line has trailing spaces."/>
     </module>
 
     <module name="TreeWalker">
 
-        <module name="SuppressWithNearbyCommentFilter">
+        <!--module name="SuppressWithNearbyCommentFilter">
             <property name="commentFormat" value="@cs-: (\w+) \((\w|\s)+\)"/>
             <property name="checkFormat" value="$1"/>
             <property name="influenceFormat" value="0"/>
         </module>
 
-        <property name="cacheFile" value="${checkstyle.cache.file}"/>
+        <property name="cacheFile" value="${checkstyle.cache.file}"/-->
 
         <!-- Checks for imports                              -->
         <module name="AvoidStarImport">
@@ -55,7 +55,7 @@
         </module>
 
         <!-- Modifier Checks                                    -->
-        <module name="ModifierOrder"/>
+        <!--module name="ModifierOrder"/-->
         <module name="RedundantModifier"/>
 
         <!-- Checks for blocks.                              -->
@@ -73,19 +73,19 @@
 
         <!-- Checks for common coding problems               -->
         <module name="EmptyStatement"/>
-        <module name="EqualsHashCode"/>
-        <module name="IllegalInstantiation"/>
+        <!--module name="EqualsHashCode"/>
+        <module name="IllegalInstantiation"/-->
 
         <!-- final parameters check, enabled only for constructors -->
-        <module name="FinalParameters">
+        <!--module name="FinalParameters">
             <property name="tokens" value="CTOR_DEF"/>
-        </module>
+        </module-->
 
         <!-- Miscellaneous other checks.                   -->
-        <module name="UpperEll"/>
+        <!--module name="UpperEll"/>
         <module name="PackageAnnotation"/>
         <module name="CovariantEquals"/>
-        <module name="ArrayTypeStyle"/>
+        <module name="ArrayTypeStyle"/-->
 
         <!-- Checks for System.out -->
         <module name="Regexp">
@@ -104,9 +104,8 @@
             <property name="format" value="printStackTrace\(\)"/>
             <property name="illegalPattern" value="true"/>
         </module>
-        
+
     </module>
 
 </module>
-
 

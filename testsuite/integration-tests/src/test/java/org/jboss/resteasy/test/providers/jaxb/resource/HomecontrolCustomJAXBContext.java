@@ -1,10 +1,19 @@
 package org.jboss.resteasy.test.providers.jaxb.resource;
 
-import javax.xml.bind.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.jboss.resteasy.test.core.basic.resource.FileExtensionMappingResource;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.Validator;
 
 public class HomecontrolCustomJAXBContext extends JAXBContext {
 
    private JAXBContext delegate;
+   private static final Logger LOG = LogManager.getLogger(FileExtensionMappingResource.class);
 
    public HomecontrolCustomJAXBContext(Class<?> type) {
       try {
@@ -16,13 +25,13 @@ public class HomecontrolCustomJAXBContext extends JAXBContext {
 
    @Override
    public Unmarshaller createUnmarshaller() throws JAXBException {
-      System.out.println("Creating unmarshaller");
+      LOG.info("Creating unmarshaller");
       return this.delegate.createUnmarshaller();
    }
 
    @Override
    public Marshaller createMarshaller() throws JAXBException {
-      System.out.println("Creating marshaller");
+      LOG.info("Creating marshaller");
       return this.delegate.createMarshaller();
    }
 

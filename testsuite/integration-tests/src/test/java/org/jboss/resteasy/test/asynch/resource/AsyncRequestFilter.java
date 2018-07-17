@@ -10,6 +10,8 @@ import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.core.Response;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jboss.resteasy.core.interception.jaxrs.SuspendableContainerRequestContext;
 import org.jboss.resteasy.spi.HttpRequest;
 import org.jboss.resteasy.spi.ResteasyAsynchronousResponse;
@@ -19,6 +21,7 @@ public abstract class AsyncRequestFilter implements ContainerRequestFilter {
 
    private String name;
    private String callbackException;
+   private static final Logger LOG = LogManager.getLogger(AsyncRequestFilter.class);
    
    public AsyncRequestFilter(String name)
    {
@@ -33,7 +36,7 @@ public abstract class AsyncRequestFilter implements ContainerRequestFilter {
 
       SuspendableContainerRequestContext ctx = (SuspendableContainerRequestContext) requestContext;
       String action = ctx.getHeaderString(name);
-      System.err.println("Filter request for "+name+" with action: "+action);
+      LOG.error("Filter request for "+name+" with action: "+action);
       if("sync-pass".equals(action)) {
          // do nothing
       }else if("sync-fail".equals(action)) {
@@ -63,7 +66,7 @@ public abstract class AsyncRequestFilter implements ContainerRequestFilter {
             } catch (InterruptedException e)
             {
                // TODO Auto-generated catch block
-               e.printStackTrace();
+               LOG.error("Error:", e);
             }
             ResteasyAsynchronousResponse resp = req.getAsyncContext().getAsyncResponse();
             resp.register((CompletionCallback) (t) -> {
@@ -77,7 +80,7 @@ public abstract class AsyncRequestFilter implements ContainerRequestFilter {
                ctx.resume(new Throwable("ouch"));
          });
       }
-      System.err.println("Filter request for "+name+" with action: "+action+" done");
+      LOG.error("Filter request for "+name+" with action: "+action+" done");
    }
    
 }

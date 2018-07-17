@@ -1,16 +1,22 @@
 package org.jboss.resteasy.test.resource.path.resource;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 
 @Path("/")
 public class EncodedPathResource
 {
+
+   private static final Logger LOG = LogManager.getLogger(EncodedPathResource.class);
+
    @Path("/hello world")
    @GET
    public String get()
    {
-      System.out.println("Hello");
+      LOG.info("Hello");
       return "HELLO";
    }
 
@@ -18,7 +24,7 @@ public class EncodedPathResource
    @GET
    public String goodbye()
    {
-      System.out.println("Goodbye");
+      LOG.info("Goodbye");
       return "GOODBYE";
    }
 }
