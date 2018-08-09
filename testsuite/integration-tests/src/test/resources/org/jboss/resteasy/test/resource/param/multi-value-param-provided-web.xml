@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app>
+
+    <servlet-mapping>
+        <servlet-name>javax.ws.rs.core.Application</servlet-name>
+        <url-pattern>/*</url-pattern>
+    </servlet-mapping>
+    <context-param>
+        <param-name>resteasy.providers</param-name>
+        <param-value>org.jboss.resteasy.convertors.MultiValuedParamConverterProvider</param-value>
+    </context-param>
+
+</web-app>
