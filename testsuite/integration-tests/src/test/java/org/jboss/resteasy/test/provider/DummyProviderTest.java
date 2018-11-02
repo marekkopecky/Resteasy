@@ -4,7 +4,6 @@ import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.resteasy.client.jaxrs.ResteasyClient;
-import org.jboss.resteasy.spi.HttpResponseCodes;
 import org.jboss.resteasy.utils.PortProviderUtil;
 import org.jboss.resteasy.utils.TestUtil;
 import org.jboss.shrinkwrap.api.Archive;
@@ -39,14 +38,13 @@ public class DummyProviderTest
    public static Archive<?> deploy() {
       WebArchive war = TestUtil.prepareArchive(DummyProviderTest.class.getSimpleName());
       war.addClass(Dummy.class);
-      war.addClass(DummyProvider.class);
-      return TestUtil.finishContainerPrepare(war, null, ProviderResource.class);
+      return TestUtil.finishContainerPrepare(war, null, DummyProvider.class, ProviderResource.class);
    }
    
    @Test
    public void test() throws Exception {
       Response response = client.target(generateURL("/provider/get")).request().get();
-      Assert.assertEquals(HttpResponseCodes.SC_OK, response.getStatus());
+      Assert.assertEquals(200, response.getStatus());
       Assert.assertEquals("Dummy provider foo", response.readEntity(String.class));
       response.close();
    }
