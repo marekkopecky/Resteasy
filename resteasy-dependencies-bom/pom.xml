@@ -79,7 +79,7 @@
         <version.org.wildfly.wildfly-arquillian-container-managed>2.1.0.Final</version.org.wildfly.wildfly-arquillian-container-managed>
         <version.org.wildfly.wildfly-arquillian-container-remote>2.1.0.Final</version.org.wildfly.wildfly-arquillian-container-remote>
         <version.org.wildfly-security>10.0.0.Final</version.org.wildfly-security>
-        <version.org.wildfly.security.wildfly-elytron>1.1.5.Final</version.org.wildfly.security.wildfly-elytron>
+        <version.org.wildfly.security.wildfly-elytron>1.6.1.Final</version.org.wildfly.security.wildfly-elytron>
         <version.org.yaml.snakeyaml>1.19</version.org.yaml.snakeyaml>
         <version.javax.validation-api>1.1.0.Final</version.javax.validation-api>
         <version.weld.api>3.0.SP3</version.weld.api>
@@ -751,6 +751,16 @@
                 <groupId>org.wildfly.core</groupId>
                 <artifactId>wildfly-cli</artifactId>
                 <version>${version.org.wildfly.core.wildfly-cli}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.jboss.marshalling</groupId>
+                        <artifactId>jboss-marshalling</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.jboss.marshalling</groupId>
+                        <artifactId>jboss-marshalling-river</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>org.wildfly.security</groupId>
@@ -761,6 +771,16 @@
                 <groupId>org.wildfly.arquillian</groupId>
                 <artifactId>wildfly-arquillian-container-managed</artifactId>
                 <version>${version.org.wildfly.wildfly-arquillian-container-managed}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.jboss.marshalling</groupId>
+                        <artifactId>jboss-marshalling</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>org.jboss.marshalling</groupId>
+                        <artifactId>jboss-marshalling-river</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>org.wildfly.arquillian</groupId>
