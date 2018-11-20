@@ -13,7 +13,6 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -70,7 +69,6 @@ public class IIOImageProviderTest {
     * @tpSince RESTEasy 3.0.16
     */
    @Test
-   @Ignore("[RESTEASY-1724] java.lang.IllegalStateException: Compression mode not MODE_EXPLICIT!")
    public void testPostJPEGIMage() throws Exception {
       File file = new File(TestUtil.getResourcePath(IIOImageProviderTest.class, testPngResource));
       Assert.assertTrue(file.exists());
