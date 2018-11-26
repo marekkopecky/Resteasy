@@ -21,10 +21,10 @@ public class ContextFeature implements Feature
       if(context.getConfiguration().getRuntimeType() == RuntimeType.CLIENT)
          return false;
       Dispatcher dispatcher = ResteasyContext.getContextData(Dispatcher.class);
-      if(dispatcher == null) {
+//      if(dispatcher == null) {
          // this can happen, but it means we're not able to find a deployment
-         return false;
-      }
+//         return false;
+//      }
       dispatcher.getDefaultContextObjects().put(Context.class, new Context());
       return true;
    }
