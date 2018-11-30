@@ -8,7 +8,6 @@ import org.jboss.resteasy.test.client.ClientTestBase;
 import org.jboss.resteasy.test.interceptor.resource.ClientRequestFilterImpl;
 import org.jboss.resteasy.test.interceptor.resource.ClientResource;
 import org.jboss.resteasy.test.interceptor.resource.CustomTestApp;
-import org.jboss.resteasy.utils.TestUtil;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.StringAsset;
@@ -21,6 +20,7 @@ import org.junit.runner.RunWith;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 
@@ -40,8 +40,8 @@ public class ClientRequestFilterRegistrationTest extends ClientTestBase {
    public static Archive<?> deploy() {
       WebArchive war = ShrinkWrap.create(WebArchive.class, ClientRequestFilterRegistrationTest.class.getSimpleName() + ".war");
       war.addClasses(CustomTestApp.class, ClientRequestFilterImpl.class, ClientResource.class);
-      war.addAsManifestResource(new StringAsset("org.jboss.resteasy.test.interceptor.resource.ClientRequestFilterImpl"),
-            "services/javax.ws.rs.ext.Providers");
+     // war.addAsManifestResource(new StringAsset("org.jboss.resteasy.test.interceptor.resource.ClientRequestFilterImpl"),
+     //       "services/javax.ws.rs.ext.Providers");
       System.out.println(war.toString(true));
       return war;
    }
@@ -58,9 +58,9 @@ public class ClientRequestFilterRegistrationTest extends ClientTestBase {
    
    @Test
    public void preMatchingTest() throws Exception {
-      WebTarget base = client.target(generateURL("/") + "testIt");
-      Response response = base.request().get();
-      Assert.assertEquals(404, response.getStatus());
+      WebTarget base = client.target(generateURL("/") + "call/client");
+      Response response = base.request().post(Entity.text(generateURL("/") + "testIt"));
+      Assert.assertEquals(204, response.getStatus());
    }
 
 }

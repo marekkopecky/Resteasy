@@ -13,6 +13,8 @@ public class ClientRequestFilterImpl implements ClientRequestFilter
    @Override
    public void filter(ClientRequestContext clientRequestContext) throws IOException
    {
-      clientRequestContext.abortWith(Response.status(404).build());
+      if (clientRequestContext.getUri().toString().contains("testIt")) {
+         clientRequestContext.abortWith(Response.status(404).build());
+      }
    }
 }
