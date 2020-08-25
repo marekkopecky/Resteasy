@@ -4,6 +4,7 @@ import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.logging.Logger;
 import org.jboss.resteasy.category.ExpectedFailingWithStandaloneMicroprofileConfiguration;
+import org.jboss.resteasy.category.NotForBootableJar;
 import org.jboss.resteasy.test.cdi.basic.resource.EJBApplication;
 import org.jboss.resteasy.test.cdi.basic.resource.EJBBook;
 import org.jboss.resteasy.test.cdi.basic.resource.EJBBookReader;
@@ -56,7 +57,8 @@ import static org.junit.Assert.assertEquals;
 @RunWith(Arquillian.class)
 
 @Category({
-    ExpectedFailingWithStandaloneMicroprofileConfiguration.class // MP is missing EJB3
+    ExpectedFailingWithStandaloneMicroprofileConfiguration.class, // MP is missing EJB3
+    NotForBootableJar.class // no EJB layer so far
 })
 public class EJBTest {
 
