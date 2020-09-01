@@ -144,74 +144,10 @@ public class SecureProcessingTest {
          "</entry>" +
          "</map>";
 
-   @Deployment(name = "fff", order = 14)
-   public static Archive<?> createTestArchive_fff() {
-      return createTestArchive("fff", "false_false_false");
-   }
-
-   @Deployment(name = "fft", order = 15)
-   public static Archive<?> createTestArchive_fft() {
-      return createTestArchive("fft", "false_false_true");
-   }
-
-   @Deployment(name = "ftd", order = 16)
-   public static Archive<?> createTestArchive_ftd() {
-      return createTestArchive("ftd", "false_true_default");
-   }
-
-   @Deployment(name = "ftf", order = 17)
-   public static Archive<?> createTestArchive_ftf() {
-      return createTestArchive("ftf", "false_true_false");
-   }
-
-   @Deployment(name = "ftt", order = 18)
-   public static Archive<?> createTestArchive_ftt() {
-      return createTestArchive("ftt", "false_true_true");
-   }
-
-   @Deployment(name = "tdd", order = 19)
-   public static Archive<?> createTestArchive_tdd() {
-      return createTestArchive("tdd", "true_default_default");
-   }
-
-   @Deployment(name = "tdf", order = 20)
-   public static Archive<?> createTestArchive_tdf() {
-      return createTestArchive("tdf", "true_default_false");
-   }
-
-   @Deployment(name = "tdt", order = 21)
-   public static Archive<?> createTestArchive_tdt() {
-      return createTestArchive("tdt", "true_default_true");
-   }
-
-   @Deployment(name = "tfd", order = 22)
-   public static Archive<?> createTestArchive_tfd() {
-      return createTestArchive("tfd", "true_false_default");
-   }
 
    @Deployment(name = "tff", order = 23)
    public static Archive<?> createTestArchive_tff() {
       return createTestArchive("tff", "true_false_false");
-   }
-
-   @Deployment(name = "tft", order = 24)
-   public static Archive<?> createTestArchive_tft() {
-      return createTestArchive("tft", "true_false_true");
-   }
-
-   @Deployment(name = "ttd", order = 25)
-   public static Archive<?> createTestArchive_ttd() {
-      return createTestArchive("ttd", "true_true_default");
-   }
-
-   @Deployment(name = "ttf", order = 26)
-   public static Archive<?> createTestArchive_ttf() {
-      return createTestArchive("ttf", "true_true_false");
-   }
-
-   @Deployment(name = "ttt", order = 27)
-   public static Archive<?> createTestArchive_ttt() {
-      return createTestArchive("ttt", "true_true_true");
    }
 
    static Archive<?> createTestArchive(String warExt, String webXmlExt) {
@@ -234,105 +170,6 @@ public class SecureProcessingTest {
    }
 
    /**
-    * @tpTestDetails "resteasy.document.secure.processing.feature" is set to false
-    *                "resteasy.document.secure.disableDTDs" is set to false
-    *                "resteasy.document.expand.entity.references" is set to false
-    * @tpSince RESTEasy 3.0.16
-    */
-   @Test
-   public void testSecurityFalseDTDsFalseExpansionFalse() throws Exception {
-      doTestPassesPassesPassesFails("fff");
-   }
-
-   /**
-    * @tpTestDetails "resteasy.document.secure.processing.feature" is set to false
-    *                "resteasy.document.secure.disableDTDs" is set to false
-    *                "resteasy.document.expand.entity.references" is set to true
-    * @tpSince RESTEasy 3.0.16
-    */
-   @Test
-   public void testSecurityFalseDTDsFalseExpansionTrue() throws Exception {
-      doTestPassesPassesPassesPasses("fft");
-   }
-
-   /**
-    * @tpTestDetails "resteasy.document.secure.processing.feature" is set to false
-    *                "resteasy.document.secure.disableDTDs" is set to true
-    *                "resteasy.document.expand.entity.references" is set to default value
-    * @tpSince RESTEasy 3.0.16
-    */
-   @Test
-   public void testSecurityFalseDTDsTrueExpansionDefault() throws Exception {
-      doTestSkipPassesFailsSkip("ftd");
-   }
-
-   /**
-    * @tpTestDetails "resteasy.document.secure.processing.feature" is set to false
-    *                "resteasy.document.secure.disableDTDs" is set to true
-    *                "resteasy.document.expand.entity.references" is set to false
-    * @tpSince RESTEasy 3.0.16
-    */
-   @Test
-   public void testSecurityFalseDTDsTrueExpansionFalse() throws Exception {
-      doTestSkipPassesFailsSkip("ftf");
-   }
-
-   /**
-    * @tpTestDetails "resteasy.document.secure.processing.feature" is set to false
-    *                "resteasy.document.secure.disableDTDs" is set to true
-    *                "resteasy.document.expand.entity.references" is set to true
-    * @tpSince RESTEasy 3.0.16
-    */
-   @Test
-   public void testSecurityFalseDTDsTrueExpansionTrue() throws Exception {
-      doTestSkipPassesFailsSkip("ftt");
-   }
-
-   /**
-    * @tpTestDetails "resteasy.document.secure.processing.feature" is set to true
-    *                "resteasy.document.secure.disableDTDs" is set to default value
-    *                "resteasy.document.expand.entity.references" is set to default value
-    * @tpSince RESTEasy 3.0.16
-    */
-   @Test
-   public void testSecurityTrueDTDsDefaultExpansionDefault() throws Exception {
-      doTestSkipFailsFailsSkip("tdd");
-   }
-
-   /**
-    * @tpTestDetails "resteasy.document.secure.processing.feature" is set to true
-    *                "resteasy.document.secure.disableDTDs" is set to default value
-    *                "resteasy.document.expand.entity.references" is set to false
-    * @tpSince RESTEasy 3.0.16
-    */
-   @Test
-   public void testSecurityTrueDTDsDefaultExpansionFalse() throws Exception {
-      doTestSkipFailsFailsSkip("tdf");
-   }
-
-   /**
-    * @tpTestDetails "resteasy.document.secure.processing.feature" is set to true
-    *                "resteasy.document.secure.disableDTDs" is set to default value
-    *                "resteasy.document.expand.entity.references" is set to true
-    * @tpSince RESTEasy 3.0.16
-    */
-   @Test
-   public void testSecurityTrueDTDsDefaultExpansionTrue() throws Exception {
-      doTestSkipFailsFailsSkip("tdt");
-   }
-
-   /**
-    * @tpTestDetails "resteasy.document.secure.processing.feature" is set to true
-    *                "resteasy.document.secure.disableDTDs" is set to false
-    *                "resteasy.document.expand.entity.references" is set to default value
-    * @tpSince RESTEasy 3.0.16
-    */
-   @Test
-   public void testSecurityTrueDTDsFalseExpansionDefault() throws Exception {
-      doTestFailsFailsPassesFails("tfd");
-   }
-
-   /**
     * @tpTestDetails "resteasy.document.secure.processing.feature" is set to true
     *                "resteasy.document.secure.disableDTDs" is set to false
     *                "resteasy.document.expand.entity.references" is set to false
@@ -341,63 +178,6 @@ public class SecureProcessingTest {
    @Test
    public void testSecurityTrueDTDsFalseExpansionFalse() throws Exception {
       doTestFailsFailsPassesFails("tff");
-   }
-
-   /**
-    * @tpTestDetails "resteasy.document.secure.processing.feature" is set to true
-    *                "resteasy.document.secure.disableDTDs" is set to false
-    *                "resteasy.document.expand.entity.references" is set to true
-    * @tpSince RESTEasy 3.0.16
-    */
-   @Test
-   public void testSecurityTrueDTDsFalseExpansionTrue() throws Exception {
-      doTestFailsFailsPassesPasses("tft");
-   }
-
-   /**
-    * @tpTestDetails "resteasy.document.secure.processing.feature" is set to true
-    *                "resteasy.document.secure.disableDTDs" is set to true
-    *                "resteasy.document.expand.entity.references" is set to default value
-    * @tpSince RESTEasy 3.0.16
-    */
-   @Test
-   public void testSecurityTrueDTDsTrueExpansionDefault() throws Exception {
-      doTestSkipFailsFailsSkip("ttd");
-   }
-
-   /**
-    * @tpTestDetails "resteasy.document.secure.processing.feature" is set to true
-    *                "resteasy.document.secure.disableDTDs" is set to true
-    *                "resteasy.document.expand.entity.references" is set to false
-    * @tpSince RESTEasy 3.0.16
-    */
-   @Test
-   public void testSecurityTrueDTDsTrueExpansionFalse() throws Exception {
-      doTestSkipFailsFailsSkip("ttf");
-   }
-
-   /**
-    * @tpTestDetails "resteasy.document.secure.processing.feature" is set to true
-    *                "resteasy.document.secure.disableDTDs" is set to true
-    *                "resteasy.document.expand.entity.references" is set to true
-    * @tpSince RESTEasy 3.0.16
-    */
-   @Test
-   public void testSecurityTrueDTDsTrueExpansionTrue() throws Exception {
-      doTestSkipFailsFailsSkip("ttt");
-   }
-
-   /**
-    * @tpTestDetails "resteasy.document.secure.processing.feature" is set to true
-    *                "resteasy.document.secure.disableDTDs" is set to true
-    *                "resteasy.document.expand.entity.references" is set to true
-    * @tpInfo RESTEASY-1485
-    * @tpSince RESTEasy 3.0.20.Final
-    */
-   @Test
-   @Category({NotForForwardCompatibility.class})
-   public void testSecurityTrueDTDsTrueExpansionTrueWithApacheLinkMessage() throws Exception {
-      doTestSkipFailsFailsSkipWithApacheLinkMessage("ttt");
    }
 
    void doTestSkipFailsFailsSkipWithApacheLinkMessage(String ext) throws Exception {

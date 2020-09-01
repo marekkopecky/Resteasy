@@ -321,6 +321,9 @@
                                         <exclude>**/SslServerWithWrongHostnameCertificateTest.java</exclude>
                                         <exclude>**/SslSniHostNamesTest.java</exclude>
                                     </excludes>
+                                    <includes>
+                                        <include>**/SecureProcessingTest.java</include>
+                                    </includes>
                                 </configuration>
                             </execution>
 
@@ -763,6 +766,9 @@
                                     <exclude>**/JsonBindingAnnotationsJacksonTest.java</exclude>
                                     <exclude>**/SseJsonEventTest</exclude>
                                 </excludes>
+                                <includes>
+                                    <include>**/SecureProcessingTest.java</include>
+                                </includes>
                             </configuration>
                         </execution>
 
