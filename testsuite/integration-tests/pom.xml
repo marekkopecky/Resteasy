@@ -245,7 +245,7 @@
                                     <log-time>true</log-time>
                                     <offline>true</offline>
                                     <plugin-options>
-                                        <jboss-maven-dist/>
+                                        <jboss-maven-dist>/home/mkopecky/jboss-eap-custom-maven-repository/maven-repository</jboss-maven-dist>
                                         <jboss-fork-embedded>true</jboss-fork-embedded>
                                     </plugin-options>
                                     <feature-packs>
@@ -322,6 +322,7 @@
                                         <exclude>**/SslServerWithWrongHostnameCertificateTest.java</exclude>
                                         <exclude>**/SslSniHostNamesTest.java</exclude>
                                     </excludes>
+                                    <includes><include>**/XxeSecureProcessingTest.java</include></includes>
                                 </configuration>
                             </execution>
 
