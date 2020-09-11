@@ -91,6 +91,17 @@
             </modules>
         </profile>
         <profile>
+            <id>custom.maven.repo.for.bootable.jar</id>
+            <activation>
+                <property>
+                    <name>maven.repo.local</name>
+                </property>
+            </activation>
+            <properties>
+                <maven.repo.for.bootable.jar>-Dmaven.repo.local=${maven.repo.local}</maven.repo.for.bootable.jar>
+            </properties>
+        </profile>
+        <profile>
             <id>default</id>
             <activation>
                 <property>
