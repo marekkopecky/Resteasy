@@ -19,11 +19,15 @@ import org.junit.Assert;
 @Path("test")
 public class ClientWebApplicationExceptionMicroProfileProxyResource {
 
-   private static ClientWebApplicationExceptionProxyResourceInterface proxy;
+   private static ClientWebApplicationExceptionProxyResourceInterface oldBehaviorProxy;
+   private static ClientWebApplicationExceptionProxyResourceInterface newBehaviorProxy;
 
    static {
       ResteasyClient client = (ResteasyClient) ResteasyClientBuilder.newClient();
-      proxy = client.target(generateURL("/app/test/")).proxy(ClientWebApplicationExceptionProxyResourceInterface.class);
+      oldBehaviorProxy = client.target(PortProviderUtil.generateURL("/app/test/", ClientWebApplicationExceptionMicroProfileProxyTest.oldBehaviorDeploymentName))
+              .proxy(ClientWebApplicationExceptionProxyResourceInterface.class);
+      newBehaviorProxy = client.target(PortProviderUtil.generateURL("/app/test/", ClientWebApplicationExceptionMicroProfileProxyTest.newBehaviorDeploymentName))
+              .proxy(ClientWebApplicationExceptionProxyResourceInterface.class);
    }
 
    private static String generateURL(String path) {
@@ -68,30 +72,58 @@ public class ClientWebApplicationExceptionMicroProfileProxyResource {
 
    /**
     * Uses a proxy to call oldException() to get an HTTP response derived from a WebApplicationException.
-    * Based on that response, the proxy will throw either a WebApplicationException or WebApplicationExceptionWrapper,
-    * depending on the value of ResteasyContextParameters.RESTEASY_ORIGINAL_WEBAPPLICATIONEXCEPTION_BEHAVIOR.
+    * The proxy will throw a WebApplicationException because
+    * ResteasyContextParameters.RESTEASY_ORIGINAL_WEBAPPLICATIONEXCEPTION_BEHAVIOR is true.
     *
     * @param i determines element of oldExceptions to be thrown by oldException()
     * @throws Exception
     */
    @GET
-   @Path("nocatch/old/{i}")
-   public String noCatchOld(@PathParam("i") int i) throws Exception {
-      return proxy.oldException(i);
+   @Path("nocatch/old/old/{i}")
+   public String noCatchOldOld(@PathParam("i") int i) throws Exception {
+      return oldBehaviorProxy.oldException(i);
+   }
+
+   /**
+    * Uses a proxy to call oldException() to get an HTTP response derived from a WebApplicationException.
+    * The proxy will throw a WebApplicationExceptionWrapper because
+    * ResteasyContextParameters.RESTEASY_ORIGINAL_WEBAPPLICATIONEXCEPTION_BEHAVIOR is false.
+    *
+    * @param i determines element of oldExceptions to be thrown by oldException()
+    * @throws Exception
+    */
+   @GET
+   @Path("nocatch/new/old/{i}")
+   public String noCatchNewOld(@PathParam("i") int i) throws Exception {
+      return newBehaviorProxy.oldException(i);
    }
 
    /**
     * Uses a proxy to call newException() to get an HTTP response derived from a WebApplicationExceptionWrapper.
-    * Based on that response, the proxy will throw either a WebApplicationException or WebApplicationExceptionWrapper,
-    * depending on the value of ResteasyContextParameters.RESTEASY_ORIGINAL_WEBAPPLICATIONEXCEPTION_BEHAVIOR.
+    * The proxy will throw a WebApplicationException because
+    * ResteasyContextParameters.RESTEASY_ORIGINAL_WEBAPPLICATIONEXCEPTION_BEHAVIOR is true.
     *
     * @param i determines element of newExceptions to be thrown by newException()
     * @throws Exception
     */
    @GET
-   @Path("nocatch/new/{i}")
-   public String noCatchNew(@PathParam("i") int i) throws Exception {
-      return proxy.newException(i);
+   @Path("nocatch/old/new/{i}")
+   public String noCatchOldNew(@PathParam("i") int i) throws Exception {
+      return oldBehaviorProxy.newException(i);
+   }
+
+   /**
+    * Uses a proxy to call newException() to get an HTTP response derived from a WebApplicationExceptionWrapper.
+    * The proxy will throw a WebApplicationExceptionWrapper because
+    * ResteasyContextParameters.RESTEASY_ORIGINAL_WEBAPPLICATIONEXCEPTION_BEHAVIOR is false.
+    *
+    * @param i determines element of newExceptions to be thrown by newException()
+    * @throws Exception
+    */
+   @GET
+   @Path("nocatch/new/new/{i}")
+   public String noCatchNewNew(@PathParam("i") int i) throws Exception {
+      return newBehaviorProxy.newException(i);
    }
 
    /**
@@ -109,7 +141,7 @@ public class ClientWebApplicationExceptionMicroProfileProxyResource {
    @Path("catch/old/old/{i}")
    public String catchOldOld(@PathParam("i") int i) throws Exception {
       try {
-         proxy.oldException(i);
+         newBehaviorProxy.oldException(i);
          throw new Exception("expected exception");
       } catch (ResteasyWebApplicationException e) {
          throw new Exception("didn't expect ResteasyWebApplicationException");
@@ -138,7 +170,7 @@ public class ClientWebApplicationExceptionMicroProfileProxyResource {
    @Path("catch/old/new/{i}")
    public String catchOldNew(@PathParam("i") int i) throws Exception {
       try {
-         return proxy.newException(i);
+         return newBehaviorProxy.newException(i);
       } catch (ResteasyWebApplicationException e) {
          throw new Exception("didn't expect ResteasyWebApplicationException");
       } catch (WebApplicationException e) {
@@ -169,7 +201,7 @@ public class ClientWebApplicationExceptionMicroProfileProxyResource {
    @Path("catch/new/old/{i}")
    public String catchNewOld(@PathParam("i") int i) throws Exception {
       try {
-         return proxy.oldException(i);
+         return newBehaviorProxy.oldException(i);
       } catch (ResteasyWebApplicationException e) {
          throw new Exception("didn't expect ResteasyWebApplicationException");
       } catch (WebApplicationException e) {
@@ -205,7 +237,7 @@ public class ClientWebApplicationExceptionMicroProfileProxyResource {
    @Path("catch/new/new/{i}")
    public String catchNewNew(@PathParam("i") int i) throws Exception {
       try {
-         return proxy.newException(i);
+         return newBehaviorProxy.newException(i);
       } catch (ResteasyWebApplicationException e) {
          throw new Exception("didn't expect ResteasyWebApplicationException");
       } catch (WebApplicationException e) {
