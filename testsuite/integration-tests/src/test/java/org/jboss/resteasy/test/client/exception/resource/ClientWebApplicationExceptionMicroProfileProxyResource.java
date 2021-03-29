@@ -10,7 +10,6 @@ import org.jboss.resteasy.client.exception.ResteasyWebApplicationException;
 import org.jboss.resteasy.client.exception.WebApplicationExceptionWrapper;
 import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
-import org.jboss.resteasy.plugins.server.servlet.ResteasyContextParameters;
 import org.jboss.resteasy.test.client.exception.ClientWebApplicationExceptionMicroProfileProxyTest;
 import org.jboss.resteasy.test.client.exception.ClientWebApplicationExceptionTest;
 import org.jboss.resteasy.utils.PortProviderUtil;
@@ -32,16 +31,6 @@ public class ClientWebApplicationExceptionMicroProfileProxyResource {
 
    private static String generateURL(String path) {
       return PortProviderUtil.generateURL(path, ClientWebApplicationExceptionMicroProfileProxyTest.class.getSimpleName());
-   }
-
-   /**
-    * Sets the System property ResteasyContextParameters.RESTEASY_ORIGINAL_WEBAPPLICATIONEXCEPTION_BEHAVIOR
-    * @param value value property is set to
-    */
-   @GET
-   @Path("behavior/{value}")
-   public void setBehavior(@PathParam("value") String value) {
-      System.setProperty(ResteasyContextParameters.RESTEASY_ORIGINAL_WEBAPPLICATIONEXCEPTION_BEHAVIOR, value);
    }
 
    /**

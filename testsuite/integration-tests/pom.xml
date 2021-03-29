@@ -805,25 +805,25 @@
                         </execution>
 
                         <!-- execution with excluded JSON-B -->
-                        <execution>
-                            <id>disable-jsonb-client</id>
-                            <phase>test</phase>
-                            <goals>
-                                <goal>test</goal>
-                            </goals>
-                            <configuration>
-                                <systemPropertyVariables>
-                                    <resteasy.microprofile.sseclient.buffersize>5</resteasy.microprofile.sseclient.buffersize>
-                                </systemPropertyVariables>
-                                <includes>
-                                    <include>**/JsonBindingAnnotationsJacksonTest.java</include>
-                                    <include>**/SseJsonEventTest.java</include>
-                                </includes>
-                                <classpathDependencyExcludes>
-                                    <classpathDependencyExclude>org.jboss.resteasy:resteasy-json-binding-provider</classpathDependencyExclude>
-                                </classpathDependencyExcludes>
-                            </configuration>
-                        </execution>
+<!--                        <execution>-->
+<!--                            <id>disable-jsonb-client</id>-->
+<!--                            <phase>test</phase>-->
+<!--                            <goals>-->
+<!--                                <goal>test</goal>-->
+<!--                            </goals>-->
+<!--                            <configuration>-->
+<!--                                <systemPropertyVariables>-->
+<!--                                    <resteasy.microprofile.sseclient.buffersize>5</resteasy.microprofile.sseclient.buffersize>-->
+<!--                                </systemPropertyVariables>-->
+<!--                                <includes>-->
+<!--                                    <include>**/JsonBindingAnnotationsJacksonTest.java</include>-->
+<!--                                    <include>**/SseJsonEventTest.java</include>-->
+<!--                                </includes>-->
+<!--                                <classpathDependencyExcludes>-->
+<!--                                    <classpathDependencyExclude>org.jboss.resteasy:resteasy-json-binding-provider</classpathDependencyExclude>-->
+<!--                                </classpathDependencyExcludes>-->
+<!--                            </configuration>-->
+<!--                        </execution>-->
 
                     </executions>
             </plugin>

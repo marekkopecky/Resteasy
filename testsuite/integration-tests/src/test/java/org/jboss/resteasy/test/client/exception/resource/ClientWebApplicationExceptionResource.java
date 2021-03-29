@@ -11,7 +11,6 @@ import javax.ws.rs.core.Response;
 
 import org.jboss.resteasy.client.exception.ResteasyWebApplicationException;
 import org.jboss.resteasy.client.exception.WebApplicationExceptionWrapper;
-import org.jboss.resteasy.plugins.server.servlet.ResteasyContextParameters;
 import org.jboss.resteasy.test.client.exception.ClientWebApplicationExceptionTest;
 import org.jboss.resteasy.utils.PortProviderUtil;
 import org.junit.Assert;
@@ -27,17 +26,6 @@ public class ClientWebApplicationExceptionResource {
    private static WebTarget newBehaviorTarget = client.target(PortProviderUtil.generateURL(
            "/app/test/", ClientWebApplicationExceptionTest.newBehaviorDeploymentName)
    );
-
-
-   /**
-    * Sets the System property ResteasyContextParameters.RESTEASY_ORIGINAL_WEBAPPLICATIONEXCEPTION_BEHAVIOR
-    * @param value value property is set to
-    */
-   @GET
-   @Path("behavior/{value}")
-   public void setBehavior(@PathParam("value") String value) {
-      System.setProperty(ResteasyContextParameters.RESTEASY_ORIGINAL_WEBAPPLICATIONEXCEPTION_BEHAVIOR, value);
-   }
 
    /**
     * Throws an instance of WebApplicationException from oldExceptions table. The Response returned by
